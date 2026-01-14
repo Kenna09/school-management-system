@@ -249,6 +249,14 @@ const manageNoticeStatus = async (payload) => {
   return rowCount;
 };
 
+const deleteNotice = async (id) => {
+    const query = `DELETE FROM notices WHERE id = $1`;
+    const queryParams = [id];
+    const { rowCount } = await processDBRequest({ query, queryParams });
+    return rowCount;
+};
+
+
 module.exports = {
   getNoticeById,
   addNewNotice,
@@ -262,4 +270,5 @@ module.exports = {
   deleteNoticeRecipient,
   getNoticeRecipientById,
   getAllPendingNotices,
+  deleteNotice,
 };

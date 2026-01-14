@@ -12,6 +12,7 @@ const {
   deleteNoticeRecipient,
   getNoticeRecipientById,
   getAllPendingNotices,
+  deleteNotice,
 } = require("./notices-repository");
 
 const fetchNoticeRecipients = async () => {
@@ -170,6 +171,21 @@ const processGetAllPendingNotices = async () => {
   return notices;
 };
 
+const processDeleteNotice = async (id) => {
+    const notice = await getNoticeById(id);
+    if (!notice) {
+        throw new ApiError(404, "Notice not found");
+    }
+
+    const affectedRow = await deleteNotice(id);
+    if (affectedRow <= 0) {
+        throw new ApiError(500, "Unable to delete notice");
+    }
+
+    return { message: "Notice deleted successfully" };
+};
+
+
 module.exports = {
   fetchNoticeRecipients,
   fetchAllNotices,
@@ -183,4 +199,5 @@ module.exports = {
   processDeleteNoticeRecipient,
   processGetNoticeRecipient,
   processGetAllPendingNotices,
+  processDeleteNotice,
 };

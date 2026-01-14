@@ -12,6 +12,7 @@ const {
   processDeleteNoticeRecipient,
   processGetNoticeRecipient,
   processGetAllPendingNotices,
+  processDeleteNotice,
 } = require("./notices-service");
 
 const handleFetchNoticeRecipients = asyncHandler(async (req, res) => {
@@ -89,6 +90,12 @@ const handleNoticeStatus = asyncHandler(async (req, res) => {
   res.json(message);
 });
 
+const handleDeleteNotice = asyncHandler(async (req, res) => {
+    const { id } = req.params;
+    const message = await processDeleteNotice(id);
+    res.json(message);
+});
+
 module.exports = {
   handleFetchNoticeRecipients,
   handleGetNoticeRecipients,
@@ -102,4 +109,5 @@ module.exports = {
   handleDeleteNoticeRecipient,
   handleGetNoticeRecipient,
   handleFetchAllPendingNotices,
+  handleDeleteNotice,
 };
